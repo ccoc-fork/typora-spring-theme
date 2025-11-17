@@ -318,11 +318,9 @@
 
 content #write {
     background-color: var(--content-write-bg-color);
-    max-width: 1200px;
-    min-width: 800px;
+    max-width: 90%;
     margin: 0 auto;
     padding-bottom: 7.5rem;
-    overflow: overlay;
 }
 
 content #write p {
@@ -332,7 +330,7 @@ content #write p {
 }
 
 content #write ol li {
-    padding-left: 0.3rem;
+    padding-left: 0.5rem;
 }
 
 content #write>h5.md-focus:before {
@@ -347,18 +345,41 @@ content #write>h5.md-focus:before {
     background-color: var(--selection-color);
 }
 
-#context-menu {
-    border-radius: 10px;
-    padding: 12px 0 0 0;
-    margin: 0;
+
+/* Section numbering */
+body {
+  counter-reset: chapter;
 }
 
-#edit-menu,
-#block-style-menu,
-#inster-menu {
-    border-radius: 10px;
-    padding: 0;
-    margin: 0;
+#write h1 {
+  counter-reset: section;
+  text-align: center;
+  font-size: 3rem;
+}
+
+#write h1::before {
+  content: counter(chapter) ". ";
+  counter-increment: chapter;
+  font-weight: normal;
+  color: #666;
+}
+
+#write h2 {
+  counter-reset: subsection;
+}
+
+#write h2::before {
+  content: counter(chapter) "." counter(section) " ";
+  counter-increment: section;
+  font-weight: normal;
+  color: #666;
+}
+
+#write h3::before {
+  content: counter(chapter) "." counter(section) "." counter(subsection) " ";
+  counter-increment: subsection;
+  font-weight: normal;
+  color: #666;
 }
 
 /* h1-h3 */
@@ -371,12 +392,12 @@ content #write>h5.md-focus:before {
 #write h1,
 #write h2 {
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     margin-bottom: 1rem;
 }
 
 #write h1 {
-    font-size: 2rem;
+    font-size: 2.4rem;
     position: relative;
     overflow: hidden;
     transition: transform 0.4s ease;
@@ -406,7 +427,7 @@ content #write>h5.md-focus:before {
 }
 
 #write h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     position: relative;
     padding-bottom: 0rem;
     font-weight: bold;
@@ -418,7 +439,7 @@ content #write>h5.md-focus:before {
     display: block;
     width: 30rem;
     height: 2.5px;
-    margin: 0.5rem auto 0.3rem;
+    margin: 0.5rem auto 0;
     background: var(--write-h2-after-bg);
     border-radius: 10px;
     transform: scaleX(0);
@@ -430,19 +451,19 @@ content #write>h5.md-focus:before {
 }
 
 #write h3 {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
 }
 
 #write h4 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
 }
 
 #write h5 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 #write h6 {
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 #write h3,
@@ -494,7 +515,17 @@ p.md-toc-content:hover {
 /* ul ol */
 ul,
 ol {
-    margin: 0;
+    padding-left: 1.5rem;
+}
+
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
 }
 
 @keyframes bounce {
@@ -564,36 +595,23 @@ blockquote {
     background-color: var(--blockquote-bg-color);
     border-radius: 7px;
     transition: box-shadow 0.3s ease, border-radius 0.3s ease, border-left 0.3s ease;
-
-    /* 增强版毛玻璃效果 */
-        backdrop-filter: blur(15px) saturate(180%) brightness(110%);
-        -webkit-backdrop-filter: blur(15px) saturate(180%) brightness(110%);
-    
-        /* 可选：添加边框增强毛玻璃质感 */
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 blockquote p {
     margin: 0.1rem 0;
 }
 
-blockquote:hover {
+/* blockquote:hover {
     border-left: calc(8px + 1px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) solid var(--blockquote-hover-border-color);
-    box-shadow: calc(0px + 1px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) calc(0px + 1px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.1 * var(--blockquote-hover-effect) * var(--use-dynamic-effect)));
+    box-shadow: calc(0px + 1px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) calc(3px + 3px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.15 * var(--blockquote-hover-effect) * var(--use-dynamic-effect)));
     border-radius: calc(7px + 8px * var(--blockquote-hover-effect) * var(--use-dynamic-effect));
-    
-    /* hover 时增强效果 */
-    backdrop-filter: blur(calc(25px + 15px * var(--blockquote-hover-effect) * var(--use-dynamic-effect))) 
-                    saturate(calc(200% + 80% * var(--blockquote-hover-effect) * var(--use-dynamic-effect))) 
-                    contrast(calc(115% + 15% * var(--blockquote-hover-effect) * var(--use-dynamic-effect))) 
-                    brightness(calc(105% + 10% * var(--blockquote-hover-effect) * var(--use-dynamic-effect)));
-    -webkit-backdrop-filter: blur(calc(25px + 15px * var(--blockquote-hover-effect) * var(--use-dynamic-effect))) 
-                            saturate(calc(200% + 80% * var(--blockquote-hover-effect) * var(--use-dynamic-effect))) 
-                            contrast(calc(115% + 15% * var(--blockquote-hover-effect) * var(--use-dynamic-effect))) 
-                            brightness(calc(105% + 10% * var(--blockquote-hover-effect) * var(--use-dynamic-effect)));
+} */
+blockquote:hover {
+    border-left: 8px solid var(--blockquote-hover-border-color);
+    box-shadow: 0 calc(1px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) calc(3px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.15 * var(--blockquote-hover-effect) * var(--use-dynamic-effect)));
+    border-radius: calc(7px + 16px * var(--blockquote-hover-effect) * var(--use-dynamic-effect));
 }
+
 
 blockquote table thead,
 blockquote .md-table-fig .md-table thead {
@@ -615,7 +633,7 @@ blockquote td {
 
 .md-alert.md-alert-tip:hover {
     border-left: calc(8px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) solid var(--alert-tip-hover-border-color);
-    box-shadow: calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.1 * var(--alert-hover-effect) * var(--use-dynamic-effect)));
+    box-shadow: calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(3px + 3px * var(--alert-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.15 * var(--alert-hover-effect) * var(--use-dynamic-effect)));
     border-radius: calc(7px + 8px * var(--alert-hover-effect) * var(--use-dynamic-effect));
 }
 
@@ -635,7 +653,7 @@ blockquote td {
 
 .md-alert.md-alert-caution:hover {
     border-left: calc(8px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) solid var(--alert-caution-hover-border-color);
-    box-shadow: calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.1 * var(--alert-hover-effect) * var(--use-dynamic-effect)));
+    box-shadow: calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(3px + 3px * var(--alert-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.15 * var(--alert-hover-effect) * var(--use-dynamic-effect)));
     border-radius: calc(7px + 8px * var(--alert-hover-effect) * var(--use-dynamic-effect));
 }
 
@@ -681,7 +699,7 @@ blockquote td {
 
 .md-alert.md-alert-warning:hover {
     border-left: calc(8px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) solid var(--alert-warning-hover-border-color);
-    box-shadow: calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.1 * var(--alert-hover-effect) * var(--use-dynamic-effect)));
+    box-shadow: calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(3px + 3px * var(--alert-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.15 * var(--alert-hover-effect) * var(--use-dynamic-effect)));
     border-radius: calc(7px + 8px * var(--alert-hover-effect) * var(--use-dynamic-effect));
 }
 
@@ -723,7 +741,7 @@ blockquote td {
 
 .md-alert.md-alert-important:hover {
     border-left: calc(8px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) solid var(--alert-important-hover-border-color);
-    box-shadow: calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.1 * var(--alert-hover-effect) * var(--use-dynamic-effect)));
+    box-shadow: calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(3px + 3px * var(--alert-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.15 * var(--alert-hover-effect) * var(--use-dynamic-effect)));
     border-radius: calc(7px + 8px * var(--alert-hover-effect) * var(--use-dynamic-effect));
 }
 
@@ -765,13 +783,13 @@ blockquote td {
 
 .md-alert.md-alert-note:hover {
     border-left: calc(8px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) solid var(--alert-note-hover-border-color);
-    box-shadow: calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.1 * var(--alert-hover-effect) * var(--use-dynamic-effect)));
+    box-shadow: calc(0px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(3px + 3px * var(--alert-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.15 * var(--alert-hover-effect) * var(--use-dynamic-effect)));
     border-radius: calc(7px + 8px * var(--alert-hover-effect) * var(--use-dynamic-effect));
 }
 
 .md-alert.md-alert-note p:hover {
     background-color: var(--alert-note-hover-bg-color);
-}
+}  
 
 .md-alert.md-alert-note ::selection {
     background-color: var(--alert-note-selection-bg-color);
@@ -989,10 +1007,6 @@ table tbody+tbody,
     padding: 0.5rem 1.5rem;
     margin-top: -1rem;
     margin-bottom: 2rem;
-    backdrop-filter: blur(15px) saturate(180%) brightness(110%);
-    -webkit-backdrop-filter: blur(15px) saturate(180%) brightness(110%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* table of contents */
@@ -1022,7 +1036,7 @@ table tbody+tbody,
     left: 1px;
     width: 0.6rem;
     height: 0.3rem;
-    border: 2px solid var(--task-list-input-after-border-color);
+    border:2px solid var(--task-list-input-after-border-color);
     border-top: 0;
     border-right: 0;
     -webkit-transform: rotate(-45deg);
@@ -1205,7 +1219,7 @@ h6 code {
 code {
     background-color: var(--code-bg-color);
     color: var(--code-color);
-    font-family: "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Maple Mono NF CN", "Maple Mono CN", "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1rem;
     font-weight: 550;
     margin: 0 2px;
@@ -1274,7 +1288,7 @@ a img {
 
 /* code fences */
 .md-fences {
-    font-family: "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Maple Mono NF CN", "Maple Mono CN", "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: var(--code-fences-color);
     background-color: var(--code-fences-bg-color);
     padding: 17px;
@@ -1333,10 +1347,8 @@ a img {
     box-shadow: 20px 0 var(--code-fences-3circle-2), 40px 0 var(--code-fences-3circle-3);
 }
 
-.code-tooltip {
-    border-radius: 6px;
-    opacity: 0.7;
-    box-shadow: 0 0.5px 0.5px 0 rgba(0, 28, 36, .2);
+.code-tooltip[contenteditable="false"] {
+    border-radius: 7px;
 }
 
 .cm-s-inner .CodeMirror-linenumber {
@@ -1479,47 +1491,15 @@ a img {
 /* scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
-    height: 8px;
-    background-color: transparent;
-}
-
-::-webkit-scrollbar:hover {
-    background-color: transparent;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 0;
+    background: var(--scrollbar-track-bg);
 }
 
 ::-webkit-scrollbar-thumb {
     background: var(--scrollbar-thumb-bg);
-    border-radius: 1px;
-    border: 1.5px solid var(--scrollbar-border);
-    backdrop-filter: var(--scrollbar-blur);
-    -webkit-backdrop-filter: var(--scrollbar-blur);
-    box-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    min-height: 30px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover-bg);
-    border-color: var(--scrollbar-border-hover);
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    transform: scale(1.02);
-}
-
-::-webkit-scrollbar-thumb:active {
-    background: var(--scrollbar-thumb-active-bg);
-    transform: scale(0.98);
-    box-shadow:
-        0 1px 4px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
 }
 
 /* find dialog */
@@ -1551,7 +1531,7 @@ a img {
 
 /* preferences */
 .ty-preferences {
-    font-family: "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Maple Mono NF CN", "Maple Mono CN", "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: var(--preferences-color);
 }
 
@@ -1737,7 +1717,7 @@ a img {
 
 /* source code mode */
 #typora-source {
-    font-family: "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Maple Mono NF CN", "Maple Mono CN", "Fira Code", Consolas, "Lucida Console", "Courier", monospace, "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: var(--source-color);
 }
 
@@ -1774,7 +1754,7 @@ a img {
         border: none;
         border-radius: 10px;
         border-collapse: separate;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); 
     }
 
     table th,
@@ -1832,7 +1812,6 @@ a img {
         & tr:nth-child(even) {
             background-color: var(--table-row-even-bg-color, #eff5f262);
         }
-
         & tr:nth-child(odd) {
             background-color: var(--table-row-odd-bg-color, #ffffff);
         }
@@ -1891,5 +1870,6 @@ a img {
 }
 
 html {
+    font-family: "MiSans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
     font-size: 17px;
 }
